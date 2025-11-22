@@ -1,46 +1,39 @@
 function CheckRadio({
-    id = "",
-    type = "checkbox",
-    name = "",
-    className = "",
-    isChecked = false,
-    isDisabled = false,
-    label = null,
-    onChange = undefined, // optional controlled handler
+  id, // id는 접근성을 위해 필수 권장
+  type = "checkbox",
+  label,
+  isChecked = false,
+  isDisabled = false,
+  onChange,
+  className = "",
+  ...rest // 1. 나머지 Props 받기 (확장성)
 }) {
-    // label can be string or { labelText, labelFor }
-    let labelTag = null;
-    if (label) {
-        if (typeof label === "string") {
-            labelTag = <label htmlFor={id}>{label}</label>;
-        } else if (typeof label === "object" && label.labelText) {
-            const forId = label.labelFor || id;
-            labelTag = <label htmlFor={forId}>{label.labelText}</label>;
-        }
-    }
+  // 2. 제어/비제어 컴포넌트 로직 단순화
+  const isControlled = typeof onChange === "function";
 
-    // If consumer provides onChange, treat as controlled (use checked).
-    // Otherwise use defaultChecked for uncontrolled inputs.
-    const inputProps = {
-        id,
-        type,
-        name,
-        className,
-        disabled: isDisabled,
-    };
-    if (typeof onChange === "function") {
-        inputProps.checked = isChecked;
-        inputProps.onChange = onChange;
-    } else {
-        inputProps.defaultChecked = isChecked;
-    }
+  // 3. 동적 속성 할당
+  const inputProps = {
+    id,
+    type,
+    disabled: isDisabled,
+    className,
+    onChange,
+    // 조건에 따라 key를 다르게 설정 (computed property name)
+    [isControlled ? "checked" : "defaultChecked"]: isChecked,
+    ...rest // aria-label, required 등 다른 속성도 자동 전달
+  };
 
-    return (
-        <>
-            <input {...inputProps} />
-            {labelTag}
-        </>
-    );
+  return (
+    <>
+      <input {...inputProps} />
+      {/* 4. Label 로직 단순화 */}
+      {label && (
+        <label htmlFor={id}>
+          {typeof label === "object" ? label.labelText : label}
+        </label>
+      )}
+    </>
+  );
 }
 
 export default CheckRadio;
