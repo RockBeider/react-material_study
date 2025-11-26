@@ -1,4 +1,7 @@
-import { useId, memo } from "react";
+import { useId, memo, createContext, useContext } from "react";
+
+// Context 생성
+const CheckRadioContext = createContext(null);
 
 /**
  * CheckRadio Component
