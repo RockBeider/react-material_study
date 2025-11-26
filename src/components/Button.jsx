@@ -9,7 +9,7 @@ import { memo } from "react";
  * @component
  * @example
  * // 기본 사용
- * <Button onClick={handleClick} name="클릭하세요" />
+ * <Button onClick={handleClick} title="클릭하세요" />
  *
  * // Children 사용
  * <Button onClick={handleClick}>
@@ -18,7 +18,7 @@ import { memo } from "react";
  *
  * @param {Object} props
  * @param {string} [props.type="button"] - 버튼 타입 (button, submit, reset)
- * @param {string} [props.name] - 버튼 텍스트 (children이 없을 경우 사용됨)
+ * @param {string} [props.title] - 버튼 텍스트 (children이 없을 경우 사용됨)
  * @param {React.ReactNode} [props.children] - 버튼 내부 컨텐츠 (name보다 우선순위 높음)
  * @param {function} [props.onClick] - 클릭 이벤트 핸들러
  * @param {string} [props.className=""] - 추가 CSS 클래스
@@ -26,7 +26,7 @@ import { memo } from "react";
  */
 function Button({
   type = "button",
-  name,
+  title,
   children,
   onClick,
   className = "",
@@ -39,7 +39,7 @@ function Button({
       className={`btn ${className}`.trim()}
       {...rest}
     >
-      {children || name}
+      {children || title}
     </button>
   );
 }

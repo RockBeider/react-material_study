@@ -36,13 +36,12 @@ function App() {
 			<div className="card">
 				<Button
 					onClick={() => setCount((count) => count + 1)}
-					name={`count is ${count}`}
-				/>
+					title="버튼"
+				></Button>
 				<CheckRadio
 					id="sampleId01"
 					type="checkbox"
-					label="체크"
-				/>
+				></CheckRadio>
 			</div>
 			<p className="read-the-docs">Click on the Vite and React logos to learn more</p>
 		</>
